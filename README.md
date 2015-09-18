@@ -1,6 +1,6 @@
 # repeats
 
-Qt program reads standart input and looks for all repeats in a string longer then min and less then max.
+Qt program reads standart input and looks for all repeats in a string longer then min and less then max. Output is the longest strike for the sequence.
 
 # compile
 ```
@@ -11,7 +11,7 @@ make
 # run
 
 ```
-cat file |./substrings -min=10 -max=15 |sort -k1,1
+cat file |./substrings -min=4 -max=15 |sort -k1,1
 ```
 
 # example
