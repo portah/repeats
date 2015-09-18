@@ -3,15 +3,16 @@
 Qt program reads standart input and looks for all repeats in a string longer then min and less then max.
 
 # compile
-
+```
 qmake
 make
-
+```
 
 # run
 
+```
 cat file |./substrings -min=10 -max=15 |sort -k1,1
-
+```
 
 # example
 
@@ -19,7 +20,7 @@ Input string:
 MRFPSIFTAVLFAASSALAAPVNTTTEDETAQIPAEAVIGYLDLEGDFDVAVLPFSNSTNNGLLFINTTIASIAAKEEGVSLDKREAEAWHWLQLKPGQPMYKREAEAEAWHWLQLKPGQPMYKREADAEAWHWLQLKPGQPMYKREADAEAWHWLQLKPGQPMY
 
 Ouptut:
-
+```
 ADAEAWHWLQLKPGQ	2
 AEAWHWLQLKPGQPM	4
 AWHWLQLKPGQPMYK	3
@@ -66,4 +67,4 @@ WLQLKPGQPMY	4
 WLQLKPGQPMYKREA	3
 YKREA	3
 YKREADAEAWHWLQL	2
-
+```
