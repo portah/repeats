@@ -103,7 +103,6 @@ void Mech::createDagU(QChar _chr){
         } else {
             i->edge[_chr]=QSharedPointer<vertex>(new vertex(lvl+1,1));
         }
-//qDebug()<<"lvl"<<lvl<<" chr="<<_chr<<" n"<<i->number<<i->edge[_chr]->number;
 
         if(lvl!=0) {
             e.setValue(i->edge[_chr]);
@@ -132,7 +131,7 @@ QList<StringWeight> Mech::getRepeats() {
 }
 
 void Mech::_getRepeats(QMap<QChar,QSharedPointer<vertex> > cur,QString ch,int num) {
-    int min=gArgs().getArgs("min").toInt();
+    int min=gArgs().getArgs("min").toInt()+1;
     if(cur.size()==0) return;
     StringWeight sw;
     bool prn=true;
