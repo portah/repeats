@@ -49,30 +49,44 @@ void FSTM::start()
     }
 
     QString str;
-
-    while (!inFile.atEnd()) {
-        QByteArray line = inFile.readLine();
-        if(line.isEmpty()) continue;
+    QString head;
+    
+    while (!inFile.atEnd() || (!str.isEmpty())) {
+	QByteArray line;
+	if(!inFile.atEnd() ){
+    	    line = inFile.readLine();
+    	    if(line.isEmpty()) continue;
+        }
         if(line.startsWith('#')) continue;
-        if(line.startsWith('>')) continue;
-
         if(line.endsWith('\n'))
            line.chop(1);
+        if(line.startsWith('>') || inFile.atEnd()) {
+    	    if(str.isEmpty()) { 
+    		head=line;
+    	        continue;
+    	    }
+	    Mech mech;
+	    qDebug()<<"Working on:"<<str;
+	    qDebug()<<"DAG creation started";
+	    QTime tm;
+	    tm.start();
+	    mech.createDag(str,gArgs().getArgs("max").toInt());
+	    qDebug()<<"DAG creation spent time:"<<tm.elapsed()<<" ms";
+    
+	    QList<StringWeight> r=mech.getRepeats();
+	    QTextStream(stdout) << head<< endl;
+	    foreach(StringWeight sw,r) {
+		QTextStream(stdout) << sw.string <<"\t"<<sw.weight<< endl;
+	    }
+	    qDebug()<<"DAG printing spent time:"<<tm.elapsed()<<" ms";
+	    qDebug()<<"Found #:"<<r.size()<<" repeats";
+    
+    	    head=line; 
+    	    str="";
+    	    continue;
+    	}
         str.append(line);
         }
-    qDebug()<<"Working on:"<<str;
-    qDebug()<<"DAG creation started";
-    QTime tm;
-    tm.start();
-    mech.createDag(str,gArgs().getArgs("max").toInt());
-    qDebug()<<"DAG creation spent time:"<<tm.elapsed()<<" ms";
-    
-    QList<StringWeight> r=mech.getRepeats();
-    foreach(StringWeight sw,r) {
-	QTextStream(stdout) << sw.string <<"\t"<<sw.weight<< endl;
-    }
-    qDebug()<<"DAG printing spent time:"<<tm.elapsed()<<" ms";
-    qDebug()<<"Found #:"<<r.size()<<" repeats";
     emit finished();
 }
 /*
